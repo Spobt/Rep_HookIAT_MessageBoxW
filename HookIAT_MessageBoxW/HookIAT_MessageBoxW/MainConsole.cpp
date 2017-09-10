@@ -8,7 +8,7 @@ DWORD g_dwOldFunAddr{};
 
 void main()
 {
-	MessageBoxW(0, L"", L"", 0);
+	MessageBoxW(GetConsoleWindow(), L"1", L"1", 0);
 
 	DWORD dw1 = (DWORD)MyMessageBoxW;
 	int iRes = HookIAT_MessageBoxW("USER32.dll", "MessageBoxW", g_dwOldFunAddr, dw1);
@@ -19,7 +19,9 @@ void main()
 		MessageBoxA(GetConsoleWindow(), strErrorText, "Error:", MB_ICONERROR);
 	}
 
-	MessageBoxW(0, L"", L"", 0);
+	MessageBoxW(GetConsoleWindow(), L"2", L"2", 0);
+
+	system("pause");
 
 	return;
 }
@@ -127,6 +129,8 @@ int WINAPI MyMessageBoxW(HWND hWnd, LPCWSTR wcsText, LPCWSTR wcsCaption, UINT uT
 
 		pop eax;
 	}
+
+	printf("Use MyMessageBoxW()\n");
 
 	return 0;
 }
